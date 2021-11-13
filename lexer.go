@@ -55,16 +55,21 @@ type L struct {
 	tokens          chan Token
 	ErrorHandler    func(e string)
 	rewind          runeStack
+	builder         *strings.Builder
 }
 
 // New creates a returns a lexer ready to parse the given source code.
 func New(src string, start StateFunc) *L {
+	var builder = new(strings.Builder)
+	builder.WriteString(src)
+
 	return &L{
-		source:     src,
+		source:     builder.String(),
 		startState: start,
 		start:      0,
 		position:   0,
 		rewind:     newRuneStack(),
+		builder:    builder,
 	}
 }
 
@@ -186,6 +191,12 @@ func (l *L) Error(e string) {
 	} else {
 		panic(e)
 	}
+}
+
+// Append adds new string to the source string with string builder.
+func (l *L) Append(more string) {
+	l.builder.WriteString(more)
+	l.source = l.builder.String()
 }
 
 // Private methods

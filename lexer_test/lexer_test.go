@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bbuck/go-lexer"
+	"github.com/fairyhunter13/go-lexer"
 )
 
 const (
