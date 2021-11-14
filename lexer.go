@@ -199,6 +199,12 @@ func (l *L) Append(more string) {
 	l.source = l.builder.String()
 }
 
+// NextPeek calls Next() and Peek() consecutively.
+func (l *L) NextPeek() rune {
+	l.Next()
+	return l.Peek()
+}
+
 // Private methods
 
 func (l *L) run() {
